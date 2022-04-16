@@ -1,0 +1,17 @@
+FROM python:3.9-alpine3.15
+## named naxreo/python3.9:alpine
+
+COPY requirements.txt /requirements.txt
+
+RUN set -eux; \
+    \
+    apk add --no-cache --virtual .build-deps \
+    git 
+
+RUN pip3 install --no-cache-dir -r /requirements.txt && \
+    pip3 cache purge && \
+    rm -rf /tmp/* && \
+    rm -rf ~/.cache/pip
+
+CMD ["python3"]
+
